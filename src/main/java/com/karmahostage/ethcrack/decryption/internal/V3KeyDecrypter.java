@@ -1,9 +1,8 @@
-package com.karmahostage.ethcrack;
+package com.karmahostage.ethcrack.decryption.internal;
 
 import com.karmahostage.ethcrack.domain.EthCrypto;
 import com.karmahostage.ethcrack.domain.EthKeystore;
 import com.lambdaworks.crypto.SCrypt;
-import com.lambdaworks.crypto.SCryptUtil;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
@@ -12,8 +11,9 @@ import java.util.Arrays;
 
 import static java.lang.Integer.parseInt;
 
-public class V3KeyDecrypter {
+public class V3KeyDecrypter implements KeyDecrypter{
 
+    @Override
     public boolean isCorrectKey(EthKeystore keyProtected, String auth) {
         if (!"aes-128-ctr".equals(keyProtected.getCrypto().getCipher())) {
             throw new IllegalArgumentException("cipher not supported");
@@ -25,7 +25,7 @@ public class V3KeyDecrypter {
         byte[] derivedKey = getKdfKey(keyProtected.getCrypto(), auth);
 
         byte[] calculatedMac = keccak256(Arrays.copyOfRange(derivedKey, 16, 32), cipherText);
-    
+
         return Arrays.equals(mac, calculatedMac);
     }
 

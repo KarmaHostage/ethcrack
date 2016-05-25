@@ -1,7 +1,8 @@
-package com.karmahostage.ethcrack.domain;
+package com.karmahostage.ethcrack.decryption;
 
 import com.google.gson.Gson;
-import com.karmahostage.ethcrack.V3KeyDecrypter;
+import com.karmahostage.ethcrack.decryption.internal.V3KeyDecrypter;
+import com.karmahostage.ethcrack.domain.EthKeystore;
 import org.junit.Test;
 
 import java.io.BufferedReader;

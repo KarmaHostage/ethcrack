@@ -11,7 +11,8 @@ public class EthKeystoreJsonParser {
         try {
             BufferedReader actualFileAsReader = new BufferedReader(new FileReader(file));
             return new Gson().getAdapter(EthKeystore.class).fromJson(actualFileAsReader);
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalArgumentException("unable to parse wallet file");
         }
 

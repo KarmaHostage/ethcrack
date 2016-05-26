@@ -2,10 +2,12 @@ package com.karmahostage.ethcrack.decryption.internal;
 
 import com.karmahostage.ethcrack.domain.EthCrypto;
 import com.karmahostage.ethcrack.domain.EthKeystore;
+import com.lambdaworks.crypto.PBKDF;
 import com.lambdaworks.crypto.SCrypt;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
+import javax.crypto.Mac;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
@@ -51,7 +53,19 @@ public class V3KeyDecrypter implements KeyDecrypter{
                 throw new IllegalArgumentException("unable to derive key");
             }
         } else if ("pbkdf2".equals(crypto.getKdf())) {
-            throw new IllegalArgumentException("not yet implemented");
+            int c = parseInt(crypto.getKdfparams().getC());
+            String prf = crypto.getKdfparams().getPrf();
+
+            if (!"hmac-sha256".equals(prf)) {
+                throw new IllegalArgumentException(String.format("Unsupported PBKDF2 PRF: %s", prf));
+            }
+
+            try {
+                return PBKDF.pbkdf2("HmacSHA256", authArray, salt, c, dkLen);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                throw new IllegalArgumentException("Unable to calculate key for pbkdf implementation");
+            }
         } else {
             throw new IllegalArgumentException("kdf not supported");
         }

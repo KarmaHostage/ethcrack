@@ -6,6 +6,8 @@ public class KdfParams {
     private String p;
     private String r;
     private String salt;
+    private String prf;
+    private String c;
 
     public String getDklen() {
         return dklen;
@@ -49,6 +51,24 @@ public class KdfParams {
 
     public KdfParams setSalt(String salt) {
         this.salt = salt;
+        return this;
+    }
+
+    public String getPrf() {
+        return prf;
+    }
+
+    public KdfParams setPrf(String prf) {
+        this.prf = prf;
+        return this;
+    }
+
+    public String getC() {
+        return c;
+    }
+
+    public KdfParams setC(String c) {
+        this.c = c;
         return this;
     }
 }

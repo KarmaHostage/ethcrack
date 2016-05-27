@@ -111,6 +111,12 @@ public class CommandInterpreter {
     }
 
     private Options getOptions() {
+
+        Option help = Option.builder("h")
+                .desc("print this help")
+                .longOpt("help")
+                .build();
+
         Option wordlist = Option.builder("f")
                 .argName("default: wordlist.txt")
                 .longOpt("wordlist")
@@ -132,6 +138,7 @@ public class CommandInterpreter {
                 .build();
 
         return new Options()
+                .addOption(help)
                 .addOption(wordlist)
                 .addOption(password)
                 .addOption(wallet);

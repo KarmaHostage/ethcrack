@@ -15,6 +15,7 @@ import static org.fest.assertions.Assertions.assertThat;
 public class V3KeyDecrypterTest {
 
     private static final String CORRECT_PASSWORD = "test";
+    private static final String INCORRECT_PASSWORD = "anothertest";
 
     @Test
     public void testCorrectPassword() throws Exception {
@@ -32,7 +33,7 @@ public class V3KeyDecrypterTest {
 
         assertThat(v3KeyDecrypter.isCorrectKey(
                 getEthKeystoreFile("/keystore/mypassword.json"),
-                CORRECT_PASSWORD)
+                INCORRECT_PASSWORD)
         ).isFalse();
     }
 
